@@ -4,3 +4,4 @@
 
 * Quick Sort
 * Bubble Sort
+* Merge Sort
