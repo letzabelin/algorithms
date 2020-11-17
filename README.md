@@ -1,1 +1,5 @@
-# algorithms
+# Algorithms
+
+## Sorting algorithms
+
+* Quick Sort
