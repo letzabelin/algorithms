@@ -3,3 +3,4 @@
 ## Sorting algorithms
 
 * Quick Sort
+* Bubble Sort
