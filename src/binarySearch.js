@@ -3,16 +3,16 @@ export default (arr, value) => {
   let rightBoundary = arr.length;
 
   while(rightBoundary - leftBoundary > 1) {
-    const middleOfArray = Math.floor((leftBoundary + rightBoundary) / 2);
+    const middleIndex = Math.floor((leftBoundary + rightBoundary) / 2);
 
-    if (arr[middleOfArray] === value) {
-      return middleOfArray;
+    if (arr[middleIndex] === value) {
+      return middleIndex;
     }
 
-    if (arr[middleOfArray] > value) {
-      rightBoundary = middleOfArray;
+    if (arr[middleIndex] > value) {
+      rightBoundary = middleIndex;
     } else {
-      leftBoundary = middleOfArray;
+      leftBoundary = middleIndex;
     }
   }
 
