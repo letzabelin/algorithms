@@ -1,12 +1,12 @@
 const isPrefix = (pattern, p) => {
   for (let i = p, j = 0; i < pattern.length; i += 1, j += 1) {
-      if (pattern[i] !== pattern[j]) {
-        return false;
-      }
-
-      return true;
+    if (pattern[i] !== pattern[j]) {
+      return false;
     }
-  };
+
+    return true;
+  }
+};
 
 const getSuffixLength = (pattern, p) => {
   let length = 0;
