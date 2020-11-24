@@ -1,77 +1,29 @@
-const isPrefix = (pattern, p) => {
-  for (let i = p, j = 0; i < pattern.length; i += 1, j += 1) {
-    if (pattern[i] !== pattern[j]) {
-      return false;
-    }
+export default (haystack, needle, startIndex = 0) => {
+  const { length: needleLength } = needle;
+  let { length: haystackLength } = haystack;
 
-    return true;
-  }
-};
-
-const getSuffixLength = (pattern, p) => {
-  let length = 0;
-
-  for (let i = p, j = pattern.length - 1; i >= 0 && pattern[i] === pattern[j]; i -= 1, j -= 1) {
-    length += 1;
-  }
-
-  return length;
-};
-
-const makeCharTable = (pattern) => {
-  const table = [];
-  const maxValueOfCharPlusOne = 65536;
-
-  for (let i = 0; i < maxValueOfCharPlusOne; i += 1) {
-    table.push(pattern.length);
-  }
-
-  for (let i = 0; i < pattern.length - 1; i += 1) {
-    const charCode = pattern.charCodeAt(i);
-    table[charCode] = pattern.length - 1 - i;
-  }
-
-  return table;
-};
-
-const makeOffsetTable = (pattern) => {
-  const table = [];
-  table.length = pattern.length;
-  let lastPrefixPosition = pattern.length;
-
-  for (let i = pattern.length; i > 0; i -= 1) {
-    if (isPrefix(pattern, i)) {
-      lastPrefixPosition = i;
-    }
-
-    table[pattern.length - i] = lastPrefixPosition - 1 + pattern.length;
-  }
-
-  for (let i = 0; i < pattern.length - 1; i += 1) {
-    const slen = getSuffixLength(pattern, i);
-    table[slen] = pattern.length - 1 - i + slen;
-  }
-
-  return table;
-};
-
-export default (text, pattern) => {
-  if (pattern.length === 0) {
+  if (needleLength <= 0 || haystackLength <= 0) {
     return -1;
   }
 
-  const charTable = makeCharTable(pattern);
-  const offsetTable = makeOffsetTable(pattern);
+  let currentIndex = startIndex;
+  var lastIndex = needleLength - 1;
+  var offsetTable = {};
 
-  for (let i = pattern.length - 1, j; i < text.length;) {
-    for (j = pattern.length - 1; pattern[j] === text[i]; i -= 1, j -= 1) {
-      if (j === 0) {
-        return i;
+  for (let i = 0; i < lastIndex; i += 1) {
+    offsetTable[needle[i]] = lastIndex - i;
+  }
+
+  while (haystackLength >= needleLength) {
+    for (let i = lastIndex; haystack[currentIndex + i] === needle[i]; i -= 1) {
+      if (i === 0) {
+        return currentIndex;
       }
     }
 
-    const charCode = text.charCodeAt(i);
-    i += Math.max(offsetTable[pattern.length - 1 - j], charTable[charCode]);
+    const offset = offsetTable[haystack[currentIndex + lastIndex]] ?? needleLength;
+    haystackLength -= offset;
+    currentIndex += offset;
   }
 
   return -1;
