@@ -7,8 +7,8 @@ export default (haystack, needle, startIndex = 0) => {
   }
 
   let currentIndex = startIndex;
-  var lastIndex = needleLength - 1;
-  var offsetTable = {};
+  const lastIndex = needleLength - 1;
+  const offsetTable = {};
 
   for (let i = 0; i < lastIndex; i += 1) {
     offsetTable[needle[i]] = lastIndex - i;
